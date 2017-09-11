@@ -3,13 +3,14 @@
   overflow: hidden;
   flex-direction: row;
 
-  height: 60px;
-  margin-left: -10px;
-  padding: 0 28px 0 0;
+  height: 3.7rem;
+  padding: 0 1rem 0 0;
 }
 
 .steps__step {
   display: flex;
+
+  margin-left: 3px;
 
   align-items: center;
   flex-grow: 1;
@@ -38,20 +39,20 @@
 .steps__step:before {
   content: '';
 
-  border-top: 60px solid transparent;
-  border-bottom: 60px solid transparent;
-  border-left: 30px solid white;
+  border-top: 2rem solid transparent;
+  border-bottom: 2rem solid transparent;
+  border-left: 1rem solid white;
 }
 
 .steps__step:after {
   position: relative;
-  right: -28px;
+  right: -1rem;
 
   content: '';
 
-  border-top: 60px solid transparent;
-  border-bottom: 60px solid transparent;
-  border-left: 30px solid white;
+  border-top: 2rem solid transparent;
+  border-bottom: 2rem solid transparent;
+  border-left: 1rem solid white;
 }
 
 .steps__step--active:after {
