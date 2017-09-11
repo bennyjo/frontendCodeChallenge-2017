@@ -11,16 +11,16 @@
 .steps__step {
   display: flex;
 
-  white-space: nowrap;
-
-  color: white;
-
   align-items: center;
   flex-grow: 1;
 }
 
 .steps__step > span {
   padding-left: 20px;
+
+  white-space: nowrap;
+
+  color: white;
 
   flex-grow: 1;
 }
