@@ -41,7 +41,7 @@
 
   border-top: 2rem solid transparent;
   border-bottom: 2rem solid transparent;
-  border-left: 1rem solid white;
+  border-left: 1rem solid snow;
 }
 
 .steps__step:after {
@@ -52,7 +52,7 @@
 
   border-top: 2rem solid transparent;
   border-bottom: 2rem solid transparent;
-  border-left: 1rem solid white;
+  border-left: 1rem solid snow;
 }
 
 .steps__step--active:after {
