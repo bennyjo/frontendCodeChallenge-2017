@@ -1,9 +1,11 @@
+/*global stepper*/
+
 const { test } = QUnit;
 
-QUnit.module( "stepper", () => {
+QUnit.module('stepper', () => {
 
-  QUnit.module( ".render()", () => {
-    test("it renders the correct number of steps", assert => {
+  QUnit.module('.render()', () => {
+    test('it renders the correct number of steps', assert => {
       const element = document.getElementById('qunit-fixture');
       const steps = [
         { text: 'Step 1', isActive: true },
@@ -17,7 +19,7 @@ QUnit.module( "stepper", () => {
       assert.strictEqual(steps.length, 3);
     });
 
-    test("it renders the correct step names", assert => {
+    test('it renders the correct step names', assert => {
       const element = document.getElementById('qunit-fixture');
       const steps = [
         { text: 'Step 1', isActive: true },
@@ -32,7 +34,7 @@ QUnit.module( "stepper", () => {
       assert.deepEqual(stepElementNames, ['Step 1', 'Step 2', 'Step 3']);
     });
 
-    test("it renders the first step as an active step", assert => {
+    test('it renders the first step as an active step', assert => {
       const element = document.getElementById('qunit-fixture');
       const steps = [
         { text: 'Step 1', isActive: true },
@@ -47,7 +49,7 @@ QUnit.module( "stepper", () => {
       assert.strictEqual(stepsElements[0].classList[1], 'steps__step--active', 'first step is active');
     });
 
-    test("it renders remaining steps as inactive steps", assert => {
+    test('it renders remaining steps as inactive steps', assert => {
       const element = document.getElementById('qunit-fixture');
       const steps = [
         { text: 'Step 1', isActive: true },
