@@ -17,11 +17,10 @@
 
         <div class="sheet">
             <p>
-                You can add <b>10 colleagues</b> to your company.
+                You can add <b><span id="add-collegue-counter"></span> colleagues</b> to your company.
             </p>
             <p>
-                You can up to 10 company members,
-                and there are currently 0.
+                You can up to 10 company members, and there are currently <span id="current-colleague-counter"></span>.
             </p>
         </div>
     </section>
@@ -35,6 +34,7 @@
 
 <script src="app.js"></script>
 <script src="stepper/stepper.js"></script>
+<script src="text/text.js"></script>
 
 <script>
     app.render();
