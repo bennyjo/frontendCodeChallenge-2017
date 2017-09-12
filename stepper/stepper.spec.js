@@ -16,7 +16,7 @@ QUnit.module('stepper', () => {
       stepper.render(element, steps);
       const stepsElements = element.getElementsByTagName('li');
 
-      assert.strictEqual(steps.length, 3);
+      assert.strictEqual(stepsElements.length, 3);
     });
 
     test('it renders the correct step names', assert => {
