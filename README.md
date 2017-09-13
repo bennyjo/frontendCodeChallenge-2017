@@ -81,3 +81,6 @@ Since chasing the perfect is an endless journey, here are some recommendations f
 
 ## How to submit your solution
 We expect to get your solution in a public git repository. You can use free hosted services like GitHub or Bitbucket. An ideal roadmap for you would be to make an initial commit with the files of this code challenge and then build upon that. When you're done with the solution, please send us the link of the repository.
+
+## Notes
+To properly evaluate the solution in Edge the files must be served from a web server rather than directly from the file system. This is due to the fact that Edge does not support the Web Storage API when files are served from the file system.
