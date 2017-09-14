@@ -14,6 +14,9 @@ class UserStore {
     const users = storedUsersString ? JSON.parse(storedUsersString) : [];
 
     this.users = users;
+    this.onAddCallbacks = [];
+    this.onRemoveCallbacks = [];
+    this.onChangeCallbacks = [];
   }
 
   add(user) {
@@ -27,8 +30,8 @@ class UserStore {
 
     userStore.webStore.setItem(userStore.id + '>' + user.email, JSON.stringify(user));
 
-    userStore.onAdd(user);
-    userStore.onChange();
+    userStore.onAddCallbacks.forEach(onAddCallback => onAddCallback(user));
+    userStore.onChangeCallbacks.forEach(onChangeCallback => onChangeCallback());
 
     function hasUniqueEmail(newUser) {
       return userStore.users.every(storedUser => storedUser.email !== newUser.email);
@@ -41,8 +44,8 @@ class UserStore {
 
     if (userIndex >= 0) {
       userStore.users.splice(userIndex, 1);
-      userStore.onRemove(userToRemove);
-      userStore.onChange();
+      userStore.onRemoveCallbacks.forEach(onRemoveCallback => onRemoveCallback(userToRemove));
+      userStore.onChangeCallbacks.forEach(onChangeCallback => onChangeCallback());
     }
 
     userStore.webStore.removeItem(userStore.id + '>' + userToRemove.email);
@@ -57,25 +60,25 @@ class UserStore {
     userStore.users.forEach(user => userStore.webStore.removeItem(userStore.id + '>' + user.email));
     userStore.users = [];
 
-    userStore.onChange();
+    userStore.onChangeCallbacks.forEach(onChangeCallback => onChangeCallback());
   }
 
   onAdd(callback) {
     if (typeof callback === 'function') {
-      callback();
+      this.onAddCallbacks.push(callback);
     }
   }
 
   onRemove(callback) {
     if (typeof callback === 'function') {
-      callback();
+      this.onRemoveCallbacks.push(callback);
     }
   }
 
   // TODO: remove?
   onChange(callback) {
     if (typeof callback === 'function') {
-      callback();
+      this.onChangeCallbacks.push(callback);
     }
   }
 }

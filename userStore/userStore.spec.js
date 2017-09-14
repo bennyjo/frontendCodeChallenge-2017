@@ -59,11 +59,16 @@ QUnit.module('UserStore', {
       const userStore = new UserStore('myUserStore', localStorage);
       const user = { name: 'John Doe', email: 'john.doe@idf.org'};
       let onAddCallCount = 0;
-      userStore.onAdd(() => onAddCallCount++);
+      let addedUser;
+      userStore.onAdd((user) => { 
+        onAddCallCount++;
+        addedUser = user;
+      });
 
       userStore.add(user);
 
-      assert.strictEqual(onAddCallCount, 1);
+      assert.strictEqual(onAddCallCount, 1, 'add callback is called');
+      assert.strictEqual(addedUser, user, 'add callback is called with the added user');
     });
 
     test('it only allows users with unique email addresses', assert => {
@@ -106,12 +111,17 @@ QUnit.module('UserStore', {
       const userStore = new UserStore('myUserStore', localStorage);
       const user = { name: 'John Doe', email: 'john.doe@idf.org'};
       let onRemoveCallCount = 0;
+      let removedUser;
       userStore.add(user);
-      userStore.onRemove(() => onRemoveCallCount++);
+      userStore.onRemove((user) => { 
+        onRemoveCallCount++;
+        removedUser = user;
+      });
 
       userStore.remove(user);
 
-      assert.strictEqual(onRemoveCallCount, 1);
+      assert.strictEqual(onRemoveCallCount, 1, 'remove callback is called');
+      assert.strictEqual(removedUser, user, 'remove callback is called with the removed user');
     });
   });
 
