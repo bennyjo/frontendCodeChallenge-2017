@@ -16,6 +16,7 @@ class UserStore {
     this.users = users;
     this.onAddCallbacks = [];
     this.onRemoveCallbacks = [];
+    this.onSetCallbacks = [];
   }
 
   add(user) {
@@ -57,6 +58,7 @@ class UserStore {
     if (Array.isArray(users)) {
       userStore.users = users;
       userStore.users.forEach(user => userStore.webStore.setItem(userStore.id + '>' + user.email, JSON.stringify(user)));
+      userStore.onSetCallbacks.forEach(onSetCallback => onSetCallback(users));
     }
   }
 
@@ -69,6 +71,12 @@ class UserStore {
   onRemove(callback) {
     if (typeof callback === 'function') {
       this.onRemoveCallbacks.push(callback);
+    }
+  }
+
+  onSet(callback) {
+    if (typeof callback === 'function') {
+      this.onSetCallbacks.push(callback);
     }
   }
 }

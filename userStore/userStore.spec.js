@@ -139,5 +139,22 @@ QUnit.module('UserStore', {
       assert.strictEqual(userStore.users[0], lauraUser, 'the users property');
       assert.deepEqual(JSON.parse(webStorageItems[0]), lauraUser, 'the web storage');
     });
+
+    test('it triggers an set change', assert => {
+      const userStore = new UserStore('myUserStore', localStorage);
+      const johnUser = { name: 'John Doe', email: 'john.doe@idf.org'};
+      const lauraUser = { name: 'Laura Williams', email: 'laura.williams@idf.org' };
+      let onSetCallCount = 0;
+      let onSetUsers;
+      userStore.onSet((users) => { 
+        onSetCallCount++;
+        onSetUsers = users;
+      });
+
+      userStore.set([ johnUser, lauraUser ]);
+
+      assert.strictEqual(onSetCallCount, 1, 'onSet callback is called');
+      assert.deepEqual([ johnUser, lauraUser ], onSetUsers, 'onSet callback is called with the set users');
+    });
   });
 });
