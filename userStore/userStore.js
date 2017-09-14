@@ -51,14 +51,16 @@ class UserStore {
     userStore.webStore.removeItem(userStore.id + '>' + userToRemove.email);
   }
 
-  // TODO:
-  // Rename to reset
-  // onReset
-  empty() {
+  set(users) {
     const userStore = this;
 
     userStore.users.forEach(user => userStore.webStore.removeItem(userStore.id + '>' + user.email));
     userStore.users = [];
+
+    if (Array.isArray(users)) {
+      userStore.users = users;
+      userStore.users.forEach(user => userStore.webStore.setItem(userStore.id + '>' + user.email, JSON.stringify(user)));
+    }
 
     userStore.onChangeCallbacks.forEach(onChangeCallback => onChangeCallback());
   }

@@ -125,16 +125,16 @@ QUnit.module('UserStore', {
     });
   });
 
-  QUnit.module('.empty()', () => {
-    test('it empties the store', assert => {
+  QUnit.module('.set()', () => {
+    test('it empties the store given no users', assert => {
       const storeId = 'myUserStore';
       const userStore = new UserStore(storeId, localStorage);
       userStore.add({ name: 'Ivana Doe', email: 'ivana.doe@idf.org'});
       userStore.add({ name: 'Irvine Doe', email: 'irvine.doe@idf.org'});
       userStore.add({ name: 'Maya Doe', email: 'maya.doe@idf.org'});
-
-      userStore.empty();
-
+  
+      userStore.set();
+  
       const webStorageItems = [
         localStorage.getItem(storeId + '>ivana.doe@idf.org'),
         localStorage.getItem(storeId + '>irvine.doe@idf.org'),
@@ -144,12 +144,32 @@ QUnit.module('UserStore', {
       assert.strictEqual(webStorageItems.length, 0, 'the web storage');
     });
 
+    test('it sets the store to given users', assert => {
+      const storeId = 'myUserStore';
+      const userStore = new UserStore(storeId, localStorage);
+      const lauraUser = { name: 'Laura Williams', email: 'laura.williams@idf.org' };
+      userStore.add({ name: 'Ivana Doe', email: 'ivana.doe@idf.org'});
+      userStore.add({ name: 'Irvine Doe', email: 'irvine.doe@idf.org'});
+      userStore.add({ name: 'Maya Doe', email: 'maya.doe@idf.org'});
+  
+      userStore.set([ lauraUser ]);
+  
+      const webStorageItems = [
+        localStorage.getItem(storeId + '>ivana.doe@idf.org'),
+        localStorage.getItem(storeId + '>irvine.doe@idf.org'),
+        localStorage.getItem(storeId + '>maya.doe@idf.org'),
+        localStorage.getItem(storeId + '>laura.williams@idf.org')
+      ].filter(item => typeof item === 'string');
+      assert.strictEqual(userStore.users[0], lauraUser, 'the users property');
+      assert.deepEqual(JSON.parse(webStorageItems[0]), lauraUser, 'the web storage');
+    });
+
     test('it triggers a change', assert => {
       const userStore = new UserStore('myUserStore', localStorage);
       let onChangeCallCount = 0;
       userStore.onChange(() => onChangeCallCount++);
 
-      userStore.empty();
+      userStore.set();
 
       assert.strictEqual(onChangeCallCount, 1);
     });
