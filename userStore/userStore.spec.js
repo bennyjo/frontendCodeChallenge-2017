@@ -6,7 +6,6 @@ const { test } = QUnit;
 // In order to deal with the "Add another colleage" scenario
 
 // TODO: Add .onEmpty
-// TODO: Possibly remove .onChange as .onEmpty might fill its role
 
 QUnit.module('UserStore', {
   afterEach: () => { localStorage.clear(); }
@@ -42,17 +41,6 @@ QUnit.module('UserStore', {
       userStore.add(user2);
 
       assert.strictEqual(userStore.users.length, 2);
-    });
-
-    test('it triggers a change', assert => {
-      const userStore = new UserStore('myUserStore', localStorage);
-      const user = { name: 'John Doe', email: 'john.doe@idf.org'};
-      let onChangeCallCount = 0;
-      userStore.onChange(() => onChangeCallCount++);
-
-      userStore.add(user);
-
-      assert.strictEqual(onChangeCallCount, 1);
     });
 
     test('it triggers an add change', assert => {
@@ -93,18 +81,6 @@ QUnit.module('UserStore', {
 
       assert.strictEqual(userStore.users[0], undefined, 'from the users property');
       assert.strictEqual(localStorage.getItem(storeId + '>' + user.email), null, 'from web storage');
-    });
-
-    test('it triggers a change', assert => {
-      const userStore = new UserStore('myUserStore', localStorage);
-      const user = { name: 'John Doe', email: 'john.doe@idf.org'};
-      let onChangeCallCount = 0;
-      userStore.add(user);
-      userStore.onChange(() => onChangeCallCount++);
-
-      userStore.remove(user);
-
-      assert.strictEqual(onChangeCallCount, 1);
     });
 
     test('it triggers an remove change', assert => {
@@ -162,16 +138,6 @@ QUnit.module('UserStore', {
       ].filter(item => typeof item === 'string');
       assert.strictEqual(userStore.users[0], lauraUser, 'the users property');
       assert.deepEqual(JSON.parse(webStorageItems[0]), lauraUser, 'the web storage');
-    });
-
-    test('it triggers a change', assert => {
-      const userStore = new UserStore('myUserStore', localStorage);
-      let onChangeCallCount = 0;
-      userStore.onChange(() => onChangeCallCount++);
-
-      userStore.set();
-
-      assert.strictEqual(onChangeCallCount, 1);
     });
   });
 });
