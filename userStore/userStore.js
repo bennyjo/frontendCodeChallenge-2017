@@ -5,7 +5,8 @@ class UserStore {
     if (!id) {
       throw new Error('UserStore: a store id is required.');
     }
-    
+
+    // TODO: Deserialize web store data, assign to this.users
     this.id = id;
     this.webStore = webStore || localStorage;
 
@@ -47,6 +48,9 @@ class UserStore {
     userStore.webStore.removeItem(userStore.id + '>' + userToRemove.email);
   }
 
+  // TODO:
+  // Rename to reset
+  // onReset
   empty() {
     const userStore = this;
 
@@ -68,6 +72,7 @@ class UserStore {
     }
   }
 
+  // TODO: remove?
   onChange(callback) {
     if (typeof callback === 'function') {
       callback();
