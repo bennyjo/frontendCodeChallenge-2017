@@ -44,6 +44,22 @@ QUnit.module('UserStore', {
       assert.deepEqual(usersInWebStore[0], user, 'to web storage');
     });
 
+    test('it makes sure the user is assigned an ID', assert => {
+      const storeId = 'myUserStore';
+      const userStore = new UserStore(storeId, localStorage);
+      const userWithId = { id: 123, name: 'John Doe', email: 'john.doe@idf.org'};
+      const userWithoutId = { name: 'Johanna Doe', email: 'johanna.doe@idf.org'};
+
+      userStore.add(userWithId);
+      userStore.add(userWithoutId);
+
+      const usersInWebStore = JSON.parse(localStorage.getItem(storeId));
+      assert.strictEqual(userStore.users[0].id, userWithId.id, 'user with initial ID, in the users property');
+      assert.strictEqual(usersInWebStore[0].id, userWithId.id, 'user with initial ID, in web storage');
+      assert.strictEqual(userStore.users[1].id, userWithoutId.id, 'user without initial ID, in web storage');
+      assert.strictEqual(usersInWebStore[1].id, userWithoutId.id, 'user without initial ID, in web storage');
+    });
+
     test('it adds multiple users', assert => {
       const storeId = 'myUserStore';
       const userStore = new UserStore(storeId, localStorage);

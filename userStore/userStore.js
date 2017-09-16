@@ -25,12 +25,18 @@ class UserStore {
       throw new Error('UserStore: user email "' + user.email + '" has already been added.');
     }
 
+    user.id = user.id || generateId(user);
+
     userStore.users.push(user);
     userStore.webStore.setItem(userStore.id, JSON.stringify(userStore.users));
     userStore.onAddCallbacks.forEach(onAddCallback => onAddCallback(user));
 
     function hasUniqueEmail(newUser) {
       return userStore.users.every(storedUser => storedUser.email !== newUser.email);
+    }
+
+    function generateId(user) {
+      return Date.now() + user.email;
     }
   }
 
