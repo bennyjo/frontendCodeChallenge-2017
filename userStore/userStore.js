@@ -68,6 +68,7 @@ class UserStore {
     }
   }
 
+  // TODO: fix the set and remove item web store calls
   set(users) {
     const userStore = this;
 
