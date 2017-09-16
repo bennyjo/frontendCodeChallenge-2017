@@ -27,9 +27,7 @@ class UserStore {
     }
 
     userStore.users.push(user);
-
-    userStore.webStore.setItem(userStore.id + '>' + user.email, JSON.stringify(user));
-
+    userStore.webStore.setItem(userStore.id, JSON.stringify(userStore.users));
     userStore.onAddCallbacks.forEach(onAddCallback => onAddCallback(user));
 
     function hasUniqueEmail(newUser) {
@@ -41,12 +39,28 @@ class UserStore {
     const userStore = this;
     const userIndex = userStore.users.findIndex(storedUser => storedUser.email === userToRemove.email);
 
-    if (userIndex >= 0) {
+    if (foundUserToRemove(userIndex)) {
+      removeUser(userIndex);
+
+      if (thereAreUsersRemaining(userStore)) {
+        userStore.webStore.setItem(userStore.id, JSON.stringify(userStore.users));
+      } else {
+        userStore.webStore.removeItem(userStore.id);
+      }
+    }
+
+    function foundUserToRemove(userIndex) {
+      return userIndex >= 0;
+    }
+
+    function thereAreUsersRemaining(userStore) {
+      return userStore.users.length;
+    }
+
+    function removeUser(userIndex) {
       userStore.users.splice(userIndex, 1);
       userStore.onRemoveCallbacks.forEach(onRemoveCallback => onRemoveCallback(userToRemove));
     }
-
-    userStore.webStore.removeItem(userStore.id + '>' + userToRemove.email);
   }
 
   set(users) {

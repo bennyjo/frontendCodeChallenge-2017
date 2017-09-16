@@ -26,19 +26,23 @@ QUnit.module('UserStore', {
 
       userStore.add(user);
 
+      const usersInWebStore = JSON.parse(localStorage.getItem(storeId));
       assert.deepEqual(userStore.users[0], user, 'to the users property');
-      assert.deepEqual(JSON.parse(localStorage.getItem(storeId + '>' + user.email)), user, 'to web storage');
+      assert.deepEqual(usersInWebStore[0], user, 'to web storage');
     });
 
     test('it adds multiple users', assert => {
-      const userStore = new UserStore('myUserStore', localStorage);
+      const storeId = 'myUserStore';
+      const userStore = new UserStore(storeId, localStorage);
       const user = { name: 'John Doe', email: 'john.doe@idf.org'};
       const user2 = { name: 'Johanna Doe', email: 'johanna.doe@idf.org'};
 
       userStore.add(user);
       userStore.add(user2);
 
-      assert.strictEqual(userStore.users.length, 2);
+      const usersInWebStore = JSON.parse(localStorage.getItem(storeId));
+      assert.strictEqual(userStore.users.length, 2, 'to the users property');
+      assert.strictEqual(usersInWebStore.length, 2, 'to web storage');
     });
 
     test('it triggers an add change', assert => {
@@ -46,7 +50,7 @@ QUnit.module('UserStore', {
       const user = { name: 'John Doe', email: 'john.doe@idf.org'};
       let onAddCallCount = 0;
       let addedUser;
-      userStore.onAdd((user) => { 
+      userStore.onAdd((user) => {
         onAddCallCount++;
         addedUser = user;
       });
@@ -73,12 +77,17 @@ QUnit.module('UserStore', {
       const storeId = 'myUserStore';
       const userStore = new UserStore(storeId, localStorage);
       const user = { name: 'John Doe', email: 'john.doe@idf.org'};
+      const user2 = { name: 'Johanna Doe', email: 'johanna.doe@idf.org'};
       userStore.add(user);
+      userStore.add(user2);
 
       userStore.remove(user);
 
-      assert.strictEqual(userStore.users[0], undefined, 'from the users property');
-      assert.strictEqual(localStorage.getItem(storeId + '>' + user.email), null, 'from web storage');
+      const usersInWebStore = JSON.parse(localStorage.getItem(storeId));
+      assert.strictEqual(userStore.users.length, 1, 'from the users property');
+      assert.strictEqual(usersInWebStore.length, 1, 'from web storage');
+      assert.deepEqual(userStore.users[0], user2, 'the correct user is removed from the users property');
+      assert.deepEqual(usersInWebStore[0], user2, 'the correct user is removed from web store');
     });
 
     test('it triggers an remove change', assert => {
@@ -87,7 +96,7 @@ QUnit.module('UserStore', {
       let onRemoveCallCount = 0;
       let removedUser;
       userStore.add(user);
-      userStore.onRemove((user) => { 
+      userStore.onRemove((user) => {
         onRemoveCallCount++;
         removedUser = user;
       });
@@ -106,9 +115,9 @@ QUnit.module('UserStore', {
       userStore.add({ name: 'Ivana Doe', email: 'ivana.doe@idf.org'});
       userStore.add({ name: 'Irvine Doe', email: 'irvine.doe@idf.org'});
       userStore.add({ name: 'Maya Doe', email: 'maya.doe@idf.org'});
-  
+
       userStore.set();
-  
+
       const webStorageItems = [
         localStorage.getItem(storeId + '>ivana.doe@idf.org'),
         localStorage.getItem(storeId + '>irvine.doe@idf.org'),
@@ -125,9 +134,9 @@ QUnit.module('UserStore', {
       userStore.add({ name: 'Ivana Doe', email: 'ivana.doe@idf.org'});
       userStore.add({ name: 'Irvine Doe', email: 'irvine.doe@idf.org'});
       userStore.add({ name: 'Maya Doe', email: 'maya.doe@idf.org'});
-  
+
       userStore.set([ lauraUser ]);
-  
+
       const webStorageItems = [
         localStorage.getItem(storeId + '>ivana.doe@idf.org'),
         localStorage.getItem(storeId + '>irvine.doe@idf.org'),
@@ -144,7 +153,7 @@ QUnit.module('UserStore', {
       const lauraUser = { name: 'Laura Williams', email: 'laura.williams@idf.org' };
       let onSetCallCount = 0;
       let onSetUsers;
-      userStore.onSet((users) => { 
+      userStore.onSet((users) => {
         onSetCallCount++;
         onSetUsers = users;
       });
