@@ -6,7 +6,10 @@ const { test } = QUnit;
 // In order to deal with the "Add another colleage" scenario
 
 QUnit.module('UserStore', {
-  afterEach: () => { localStorage.clear(); }
+  afterEach: () => {
+    localStorage.clear();
+    sessionStorage.clear();
+  }
 }, () => {
   test('it requires an id', (assert) => {
     assert.throws(() => new UserStore());
