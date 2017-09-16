@@ -1,0 +1,23 @@
+.userForm__row {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+}
+
+.userForm__row :not(:first-child) {
+  margin-right: -10px;
+  margin-left: 20px;
+}
+
+.userForm__input {
+  font-family: 'Roboto';
+
+  padding: 0.5rem;
+
+  border: 1px solid gainsboro;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 1px whitesmoke;
+
+  flex-grow: 1;
+}
