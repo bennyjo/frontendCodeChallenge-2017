@@ -5,6 +5,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="stepper/stepper.css">
+    <link rel="stylesheet" href="userForm/userForm.css">
 </head>
 <body>
 
@@ -22,6 +23,7 @@
             <p>
                 You can up to 10 company members, and there are currently <span id="current-colleague-counter"></span>.
             </p>
+            <form id="newColleaguesForm"></form>
         </div>
     </section>
 
@@ -31,10 +33,11 @@
 
 </div>
 
-
-<script src="app.js"></script>
+<script src="userStore/userStore.js"></script>
+<script src="userForm/userForm.js"></script>
 <script src="stepper/stepper.js"></script>
 <script src="text/text.js"></script>
+<script src="app.js"></script>
 
 <script>
     app.render();
