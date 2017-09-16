@@ -25,11 +25,14 @@ class UserStore {
       throw new Error('UserStore: user email "' + user.email + '" has already been added.');
     }
 
+    user = Object.assign({}, user);
     user.id = user.id || generateId(user);
 
     userStore.users.push(user);
     userStore.webStore.setItem(userStore.id, JSON.stringify(userStore.users));
-    userStore.onAddCallbacks.forEach(onAddCallback => onAddCallback(user));
+    userStore.onAddCallbacks.forEach(onAddCallback => onAddCallback(user.id));
+
+    return user.id;
 
     function hasUniqueEmail(newUser) {
       return userStore.users.every(storedUser => storedUser.email !== newUser.email);
@@ -40,9 +43,9 @@ class UserStore {
     }
   }
 
-  remove(userToRemove) {
+  remove(userId) {
     const userStore = this;
-    const userIndex = userStore.users.findIndex(storedUser => storedUser.email === userToRemove.email);
+    const userIndex = userStore.users.findIndex(storedUser => storedUser.id === userId);
 
     if (foundUserToRemove(userIndex)) {
       removeUser(userIndex);
@@ -64,7 +67,7 @@ class UserStore {
 
     function removeUser(userIndex) {
       userStore.users.splice(userIndex, 1);
-      userStore.onRemoveCallbacks.forEach(onRemoveCallback => onRemoveCallback(userToRemove));
+      userStore.onRemoveCallbacks.forEach(onRemoveCallback => onRemoveCallback(userId));
     }
   }
 

@@ -15,7 +15,7 @@ const app = (function () {
   newCollegues.add({name: 'John Doe', email: 'john.doe@idf.com'});
 
   newCollegues.onAdd(user => newColleaguesForm.addRow(user));
-  newCollegues.onRemove(user => newColleaguesForm.removeRow(user));
+  newCollegues.onRemove(userId => newColleaguesForm.removeRow(userId));
   newCollegues.onSet((users) => newColleaguesForm.render(users));
 
   function render() {
