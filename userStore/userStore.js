@@ -6,11 +6,10 @@ class UserStore {
       throw new Error('UserStore: a store id is required.');
     }
 
-    // TODO: Deserialize web store data, assign to this.users
     this.id = id;
     this.webStore = webStore || localStorage;
 
-    const storedUsersString = this.webStore.getItem('id');
+    const storedUsersString = this.webStore.getItem(id);
     const users = storedUsersString ? JSON.parse(storedUsersString) : [];
 
     this.users = users;

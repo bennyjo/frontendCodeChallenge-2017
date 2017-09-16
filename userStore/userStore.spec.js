@@ -21,6 +21,16 @@ QUnit.module('UserStore', {
     assert.strictEqual(userStore.webStore, localStorage);
   });
 
+  test('it initialises using data stored in web storage', assert => {
+    const userStoreId = 'myUserStore';
+    const users = [{ name: 'John Doe', email: 'john.doe@idf.com' }];
+    localStorage.setItem(userStoreId, JSON.stringify(users));
+
+    const userStore = new UserStore(userStoreId, localStorage);
+
+    assert.deepEqual(userStore.users, users);
+  });
+
   QUnit.module('.add()', () => {
     test('it adds a user', assert => {
       const storeId = 'myUserStore';
