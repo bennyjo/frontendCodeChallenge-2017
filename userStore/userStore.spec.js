@@ -5,8 +5,6 @@ const { test } = QUnit;
 // TODO: .addAnonymous()
 // In order to deal with the "Add another colleage" scenario
 
-// TODO: Add .onEmpty
-
 QUnit.module('UserStore', {
   afterEach: () => { localStorage.clear(); }
 }, () => {
