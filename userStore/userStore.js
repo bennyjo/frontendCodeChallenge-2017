@@ -36,7 +36,7 @@ class UserStore {
     }
 
     function generateId(user) {
-      return Date.now() + user.email;
+      return user.email ? Date.now() + user.email : Date.now();
     }
   }
 
