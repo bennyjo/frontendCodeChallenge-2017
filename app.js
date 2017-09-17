@@ -8,15 +8,15 @@ const app = (function () {
   const addColleagueCounter = document.getElementById('add-collegue-counter');
   const currentColleageCounter = document.getElementById('current-colleague-counter');
 
-  const newCollegues = new UserStore('newCollegues');
+  const newColleagues = new UserStore('newColleagues');
   const newColleaguesForm = new UserForm(document.getElementById('newColleaguesForm'));
 
   // TODO: Instead, run newColleagues.addAnynomous();
-  newCollegues.add({name: 'John Doe', email: 'john.doe@idf.com'});
+  newColleagues.add({name: 'John Doe', email: 'john.doe@idf.com'});
 
-  newCollegues.onAdd(user => newColleaguesForm.addRow(user));
-  newCollegues.onRemove(userId => newColleaguesForm.removeRow(userId));
-  newCollegues.onSet((users) => newColleaguesForm.render(users));
+  newColleagues.onAdd(user => newColleaguesForm.addRow(user));
+  newColleagues.onRemove(userId => newColleaguesForm.removeRow(userId));
+  newColleagues.onSet((users) => newColleaguesForm.render(users));
 
   function render() {
     stepper.render(stepperElement, [
@@ -28,7 +28,7 @@ const app = (function () {
     text.render(addColleagueCounter, 10);
     text.render(currentColleageCounter, 0);
 
-    newColleaguesForm.render(newCollegues.users);
+    newColleaguesForm.render(newColleagues.users);
   }
 
   return { render };
