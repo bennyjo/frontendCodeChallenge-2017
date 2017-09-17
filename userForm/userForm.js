@@ -40,7 +40,7 @@ class UserForm {
   removeRow(user) {
     const userForm = this;
     const formRows = [... userForm.element.getElementsByClassName('form__row')];
-    const userRow = formRows.find(formRow => formRow.getAttribute('data-email') === user.email);
+    const userRow = formRows.find(formRow => formRow.getAttribute('data-id') === user.id);
 
     if (userRow) {
       userForm.element.removeChild(userRow);
