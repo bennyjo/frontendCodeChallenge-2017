@@ -39,7 +39,7 @@ class UserStore {
     }
 
     function generateId(user) {
-      return user.email ? Date.now() + user.email : Date.now() + Math.random();
+      return user.email ? Date.now() + user.email : (Date.now() + Math.random()).toString();
     }
   }
 
