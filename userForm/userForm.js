@@ -48,8 +48,8 @@ class UserForm {
     function getRowTemplate(user) {
       return `
         <div class='userForm__row' data-id='${user.id}'>
-          <input class='userForm__input' name='username' value='${user.name}'></input>
-          <input class='userForm__input' name='email' type='email' value='${user.email}'></input>
+          <input class='userForm__input' name='username' value='${user.name}' placeholder='John Doe'></input>
+          <input class='userForm__input' name='email' type='email' value='${user.email}'placeholder='john.doe@gmail.com'></input>
           <span class='userForm__bin'></span>
         </div>
       `;
