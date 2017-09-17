@@ -105,16 +105,16 @@ QUnit.module('UserStore', {
       const userStore = new UserStore('myUserStore', localStorage);
       const johnUser = { name: 'John Doe', email: 'john.doe@idf.org'};
       let onAddCallCount = 0;
-      let addedUserId;
-      userStore.onAdd((userId) => {
+      let addedUser;
+      userStore.onAdd((user) => {
         onAddCallCount++;
-        addedUserId = userId;
+        addedUser = user;
       });
 
       const johnUserId = userStore.add(johnUser);
 
       assert.strictEqual(onAddCallCount, 1, 'add callback is called');
-      assert.deepEqual(addedUserId, johnUserId, 'add callback is called with the added user\'s id');
+      assert.deepEqual(addedUser, withId(johnUser, johnUserId), 'add callback is called with the added user\'s id');
     });
 
     test('it only allows users with unique email addresses', assert => {

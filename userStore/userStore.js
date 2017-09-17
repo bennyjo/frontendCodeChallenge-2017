@@ -30,7 +30,7 @@ class UserStore {
 
     userStore.users.push(user);
     userStore.webStore.setItem(userStore.id, JSON.stringify(userStore.users));
-    userStore.onAddCallbacks.forEach(onAddCallback => onAddCallback(user.id));
+    userStore.onAddCallbacks.forEach(onAddCallback => onAddCallback(user));
 
     return user.id;
 
