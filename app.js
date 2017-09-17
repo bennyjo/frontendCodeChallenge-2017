@@ -15,6 +15,7 @@ const app = (function () {
     newColleagues.addAnonymous();
   }
 
+  // TODO: Put in its own component: 'pseudoButton'
   const addColleageElement = document.getElementById('addColleague');
   addColleageElement.addEventListener('click', () => newColleagues.addAnonymous());
   addColleageElement.addEventListener('onKeyUp', (event) => {
