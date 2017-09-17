@@ -77,16 +77,15 @@ class UserStore {
     }
   }
 
-  // TODO: fix the set and remove item web store calls
   set(users) {
     const userStore = this;
 
-    userStore.users.forEach(user => userStore.webStore.removeItem(userStore.id + '>' + user.email));
+    userStore.webStore.removeItem(userStore.id);
     userStore.users = [];
 
     if (Array.isArray(users)) {
       userStore.users = users;
-      userStore.users.forEach(user => userStore.webStore.setItem(userStore.id + '>' + user.email, JSON.stringify(user)));
+      userStore.webStore.setItem(userStore.id, JSON.stringify(users));
       userStore.onSetCallbacks.forEach(onSetCallback => onSetCallback(users));
     }
   }

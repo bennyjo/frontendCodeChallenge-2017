@@ -203,13 +203,8 @@ QUnit.module('UserStore', {
 
       userStore.set();
 
-      const webStorageItems = [
-        localStorage.getItem(storeId + '>ivana.doe@idf.org'),
-        localStorage.getItem(storeId + '>irvine.doe@idf.org'),
-        localStorage.getItem(storeId + '>maya.doe@idf.org')
-      ].filter(item => typeof item === 'string');
       assert.strictEqual(userStore.users.length, 0, 'the users property');
-      assert.strictEqual(webStorageItems.length, 0, 'the web storage');
+      assert.strictEqual(localStorage.getItem(storeId), null, 'the web storage');
     });
 
     test('it sets the store to given users', assert => {
@@ -222,14 +217,9 @@ QUnit.module('UserStore', {
 
       userStore.set([ lauraUser ]);
 
-      const webStorageItems = [
-        localStorage.getItem(storeId + '>ivana.doe@idf.org'),
-        localStorage.getItem(storeId + '>irvine.doe@idf.org'),
-        localStorage.getItem(storeId + '>maya.doe@idf.org'),
-        localStorage.getItem(storeId + '>laura.williams@idf.org')
-      ].filter(item => typeof item === 'string');
+      const usersInWebStore = JSON.parse(localStorage.getItem(storeId));
       assert.strictEqual(userStore.users[0], lauraUser, 'the users property');
-      assert.deepEqual(JSON.parse(webStorageItems[0]), lauraUser, 'the web storage');
+      assert.deepEqual(usersInWebStore[0], lauraUser, 'the web storage');
     });
 
     test('it triggers an set change', assert => {
