@@ -21,3 +21,14 @@ body {
   background-color: white;
   box-shadow: 0 2px 5px silver;
 }
+
+.clickable {
+  cursor: pointer;
+  user-select: none;
+
+  color: dodgerblue;
+}
+
+.clickable:hover {
+  color: darkblue;
+}

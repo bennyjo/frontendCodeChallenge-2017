@@ -15,6 +15,16 @@ const app = (function () {
     newColleagues.addAnonymous();
   }
 
+  const addColleageElement = document.getElementById('addColleague');
+  addColleageElement.addEventListener('click', () => newColleagues.addAnonymous());
+  addColleageElement.addEventListener('onKeyUp', (event) => {
+    const spaceBarKeyCode = 32;
+
+    if (event.keyCode === spaceBarKeyCode) {
+      newColleagues.addAnonymous();
+    }
+  });
+
   function render() {
     stepper.render(stepperElement, [
       { text: 'Step 1', isActive: true },
