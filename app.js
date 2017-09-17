@@ -11,8 +11,9 @@ const app = (function () {
   const newColleagues = new UserStore('newColleagues');
   const newColleaguesForm = new UserForm(document.getElementById('newColleaguesForm'));
 
-  // TODO: Instead, run newColleagues.addAnynomous();
-  newColleagues.add({name: 'John Doe', email: 'john.doe@idf.com'});
+  if (!newColleagues.users.length) {
+    newColleagues.addAnonymous();
+  }
 
   newColleagues.onAdd(user => newColleaguesForm.addRow(user));
   newColleagues.onRemove(userId => newColleaguesForm.removeRow(userId));
