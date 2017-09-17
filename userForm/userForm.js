@@ -1,49 +1,68 @@
+/* global Bin */
 /* exported UserForm */
 
 class UserForm {
-  constructor(element) {
+  constructor(element, userStore) {
     if (!element) {
       throw new Error('UserForm: element required');
     }
 
-    this.element = element;
-  }
-  
-  render(users) {
-    const userForm = this;
-    const rows = [];
+    userStore.onAdd(user => addRow(user));
+    userStore.onRemove(userId => removeRow(userId));
+    userStore.onSet(() => render());
 
-    // TODO:
-    // On input blur, save value to store
-    users.forEach((user) => rows.push(userForm._getRowTemplate(user)));
+    render();
 
-    this.element.innerHTML = rows.join('').trim();
-  }
+    function render() {
+      const rows = [];
 
-  _getRowTemplate(user) {
-    return `
-      <div class='userForm__row' data-id='${user.id}'>
-        <input class='userForm__input' name='username' value='${user.name}'></input>
-        <input class='userForm__input' name='email' type='email' value='${user.email}'></input>
-        <span class='userForm__bin'></span>
-      </div>
-    `;
-  }
+      // TODO:
+      // On input blur, save value to store
+      userStore.users.forEach((user) => rows.push(getRowTemplate(user)));
 
-  addRow(user) {
-    const userForm = this;
-    const row = userForm._getRowTemplate(user);
+      element.innerHTML = rows.join('').trim();
 
-    userForm.element.insertAdjacentHTML('beforeend', row);
-  }
+      const fromRows = [...element.getElementsByClassName('userForm__row')];
+      fromRows.forEach(initBin);
+    }
 
-  removeRow(user) {
-    const userForm = this;
-    const formRows = [... userForm.element.getElementsByClassName('form__row')];
-    const userRow = formRows.find(formRow => formRow.getAttribute('data-id') === user.id);
+    function addRow(user) {
+      const rowTemplate = getRowTemplate(user);
 
-    if (userRow) {
-      userForm.element.removeChild(userRow);
+      element.insertAdjacentHTML('beforeend', rowTemplate);
+
+      const rowElements = element.getElementsByClassName('userForm__row');
+      const lastRowElement = rowElements[rowElements.length-1];
+      initBin(lastRowElement);
+    }
+
+    function removeRow(rowId) {
+      const formRows = [...element.getElementsByClassName('userForm__row')];
+      const rowToRemove = formRows.find(formRow => formRow.getAttribute('data-id') === rowId);
+
+      if (rowToRemove) {
+        element.removeChild(rowToRemove);
+      }
+    }
+
+    function getRowTemplate(user) {
+      return `
+        <div class='userForm__row' data-id='${user.id}'>
+          <input class='userForm__input' name='username' value='${user.name}'></input>
+          <input class='userForm__input' name='email' type='email' value='${user.email}'></input>
+          <span class='userForm__bin'></span>
+        </div>
+      `;
+    }
+
+    function initBin(formRow) {
+      const binElement = formRow.querySelector('.userForm__bin');
+      const bin = new Bin(binElement);
+
+      bin.onClick(() => {
+        const rowId = formRow.getAttribute('data-id');
+        removeRow(rowId);
+      });
     }
   }
 }

@@ -9,15 +9,11 @@ const app = (function () {
   const currentColleageCounter = document.getElementById('current-colleague-counter');
 
   const newColleagues = new UserStore('newColleagues');
-  const newColleaguesForm = new UserForm(document.getElementById('newColleaguesForm'));
+  const newColleaguesForm = new UserForm(document.getElementById('newColleaguesForm'), newColleagues);
 
   if (!newColleagues.users.length) {
     newColleagues.addAnonymous();
   }
-
-  newColleagues.onAdd(user => newColleaguesForm.addRow(user));
-  newColleagues.onRemove(userId => newColleaguesForm.removeRow(userId));
-  newColleagues.onSet((users) => newColleaguesForm.render(users));
 
   function render() {
     stepper.render(stepperElement, [
@@ -28,8 +24,6 @@ const app = (function () {
 
     text.render(addColleagueCounter, 10);
     text.render(currentColleageCounter, 0);
-
-    newColleaguesForm.render(newColleagues.users);
   }
 
   return { render };
