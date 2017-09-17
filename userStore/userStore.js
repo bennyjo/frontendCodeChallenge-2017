@@ -21,7 +21,7 @@ class UserStore {
   add(user) {
     const userStore = this;
 
-    if (!hasUniqueEmail(user)) {
+    if (user.email && !hasUniqueEmail(user)) {
       throw new Error('UserStore: user email "' + user.email + '" has already been added.');
     }
 
@@ -39,8 +39,14 @@ class UserStore {
     }
 
     function generateId(user) {
-      return user.email ? Date.now() + user.email : Date.now();
+      return user.email ? Date.now() + user.email : Date.now() + Math.random();
     }
+  }
+
+  addAnonymous() {
+    const userStore = this;
+
+    return userStore.add({ name: '', email: '' });
   }
 
   remove(userId) {

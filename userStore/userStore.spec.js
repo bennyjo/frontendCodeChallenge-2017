@@ -128,6 +128,35 @@ QUnit.module('UserStore', {
     });
   });
 
+  QUnit.module('.addAnonymous()', () => {
+    test('it adds an anonymous user', assert => {
+      const storeId = 'myUserStore';
+      const userStore = new UserStore('myUserStore', localStorage);
+      const anonymousUser = { name: '', email: '' };
+
+      const anonymousUserId = userStore.addAnonymous();
+
+      const usersInWebStore = JSON.parse(localStorage.getItem(storeId));
+      assert.strictEqual(userStore.users.length, 1, 'to the users property');
+      assert.strictEqual(usersInWebStore.length, 1, 'to web storage');
+      assert.deepEqual(userStore.users[0], withId(anonymousUser, anonymousUserId), 'is anonymous user in users property');
+      assert.deepEqual(usersInWebStore[0], withId(anonymousUser, anonymousUserId), 'is anonymous user in web storage');
+    });
+
+    test('it adds multiple anonymous users', assert => {
+      const storeId = 'myUserStore';
+      const userStore = new UserStore('myUserStore', localStorage);
+
+      const anonymousUserId = userStore.addAnonymous();
+      const anonymousUserId2 = userStore.addAnonymous();
+
+      const usersInWebStore = JSON.parse(localStorage.getItem(storeId));
+      assert.strictEqual(userStore.users.length, 2, 'to the users property');
+      assert.strictEqual(usersInWebStore.length, 2, 'to web storage');
+      assert.notStrictEqual(anonymousUserId, anonymousUserId2, 'with different user ids');
+    });
+  });
+
   QUnit.module('.remove()', () => {
     test('it removes a user', assert => {
       const storeId = 'myUserStore';
