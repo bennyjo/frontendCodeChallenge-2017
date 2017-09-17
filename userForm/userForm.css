@@ -1,8 +1,24 @@
+.userForm {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+  margin: 20px 0px;
+}
+
+.userForm :first-child {
+  margin-top: 0;
+}
+
+.userForm :last-child {
+  margin-bottom: 0;
+}
+
 .userForm__row {
   display: flex;
   flex-direction: row;
 
-  justify-content: space-between;
+  margin: 10px 0;
 }
 
 .userForm__input {
