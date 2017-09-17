@@ -22,10 +22,10 @@ class UserForm {
 
   _getRowTemplate(user) {
     return `
-      <div class='userForm__row' data-email='${user.email}'>
+      <div class='userForm__row' data-id='${user.id}'>
         <input class='userForm__input' name='username' value='${user.name}'></input>
         <input class='userForm__input' name='email' type='email' value='${user.email}'></input>
-        <span class='icon icon__bin'></span>
+        <span class='userForm__bin'></span>
       </div>
     `;
   }
