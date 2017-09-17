@@ -60,8 +60,8 @@ class UserForm {
       const bin = new Bin(binElement);
 
       bin.onClick(() => {
-        const rowId = formRow.getAttribute('data-id');
-        removeRow(rowId);
+        const id = formRow.getAttribute('data-id');
+        userStore.remove(id);
       });
     }
   }
