@@ -9,7 +9,7 @@ const app = (function () {
   const currentColleageCounter = document.getElementById('current-colleague-counter');
 
   const newColleagues = new UserStore('newColleagues');
-  const newColleaguesForm = new UserForm(document.getElementById('newColleaguesForm'), newColleagues);
+  new UserForm(document.getElementById('newColleaguesForm'), newColleagues);
 
   if (!newColleagues.users.length) {
     newColleagues.addAnonymous();
