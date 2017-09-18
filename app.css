@@ -17,6 +17,12 @@ body {
   margin-bottom: 10px;
 }
 
+.page {
+  width: 90%;
+  max-width: 760px;
+  min-width: 500px;
+}
+
 .column {
   display: flex;
   flex-direction: column;
