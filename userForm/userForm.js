@@ -9,7 +9,7 @@ class UserForm {
 
     userStore.onAdd(user => addRow(user));
     userStore.onRemove(userId => removeRow(userId));
-    userStore.onSet(() => render());
+    userStore.onEmpty(() => render());
 
     render();
 
