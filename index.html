@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div class="page">
+<div class="column">
 
     <nav id="stepper"></nav>
 
@@ -25,7 +25,11 @@
                 You can up to 10 company members, and there are currently <span id="current-colleague-counter"></span>.
             </p>
             <form id="newColleaguesForm" class="userForm"></form>
-            <span id="addColleague" class="clickable" role="button">+ Add another colleague</span>
+            <span id="addNewColleague" class="clickable clickable--blue" role="button">+ Add another colleague</span>
+            <div id="newColleaguesFormButtons" class="column column--center">
+                <button id="addExistingColleaguesButton" type="button" class="button button--blue">Add 3 colleagues</button>
+                <span id="resetNewColleaguesForm" class="clickable clickable--gray" role="button">Reset</span>
+            </div>
         </div>
     </section>
 
