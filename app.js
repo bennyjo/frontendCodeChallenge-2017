@@ -15,13 +15,28 @@ const app = (function () {
     newColleagues.addAnonymous();
   }
 
-  // TODO: Put in its own component: 'pseudoButton'
-  const addColleageElement = document.getElementById('addColleague');
+  // TODO: User a 'pseudoButton' component
+  const addColleageElement = document.getElementById('addNewColleague');
   addColleageElement.addEventListener('click', () => newColleagues.addAnonymous());
   addColleageElement.addEventListener('onKeyUp', (event) => {
     const spaceBarKeyCode = 32;
 
     if (event.keyCode === spaceBarKeyCode) {
+      newColleagues.addAnonymous();
+    }
+  });
+
+  // TODO: Use a 'pseudoButton' component
+  const resetFormElement = document.getElementById('resetNewColleaguesForm');
+  resetFormElement.addEventListener('click', () => {
+    newColleagues.empty();
+    newColleagues.addAnonymous();
+  });
+  resetFormElement.addEventListener('onKeyUp', (event) => {
+    const spaceBarKeyCode = 32;
+
+    if (event.keyCode === spaceBarKeyCode) {
+      newColleagues.empty();
       newColleagues.addAnonymous();
     }
   });
