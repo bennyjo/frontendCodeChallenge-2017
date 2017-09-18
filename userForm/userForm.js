@@ -16,14 +16,13 @@ class UserForm {
     function render() {
       const rows = [];
 
-      // TODO:
-      // On input blur, save value to store
       userStore.users.forEach((user) => rows.push(getRowTemplate(user)));
 
       element.innerHTML = rows.join('').trim();
 
       const fromRows = [...element.getElementsByClassName('userForm__row')];
       fromRows.forEach(initBin);
+      fromRows.forEach(initInputs);
     }
 
     function addRow(user) {
@@ -34,6 +33,7 @@ class UserForm {
       const rowElements = element.getElementsByClassName('userForm__row');
       const lastRowElement = rowElements[rowElements.length-1];
       initBin(lastRowElement);
+      initInputs(lastRowElement);
     }
 
     function removeRow(rowId) {
@@ -60,8 +60,23 @@ class UserForm {
       const bin = new Bin(binElement);
 
       bin.onClick(() => {
-        const id = formRow.getAttribute('data-id');
-        userStore.remove(id);
+        const userId = formRow.getAttribute('data-id');
+        userStore.remove(userId);
+      });
+    }
+
+    function initInputs(formRow) {
+      const nameInput = formRow.querySelector('input[name="username"]');
+      const emailInput = formRow.querySelector('input[name="email"]');
+      const userId = formRow.getAttribute('data-id');
+
+      nameInput.addEventListener('blur', () => {
+        userStore.update(userId, {name: nameInput.value});
+      });
+
+      emailInput.addEventListener('blur', () => {
+        // TODO: handle duplicate email addresses
+        userStore.update(userId, {email: emailInput.value});
       });
     }
   }
