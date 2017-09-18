@@ -9,6 +9,11 @@ body {
   justify-content: space-around;
 }
 
+h1,
+h2 {
+  font-family: 'Roboto', sans-serif;
+}
+
 #newColleaguesFormButtons {
   margin-top: 20px;
 }
@@ -19,8 +24,8 @@ body {
 
 .page {
   width: 90%;
-  max-width: 760px;
   min-width: 500px;
+  max-width: 760px;
 }
 
 .column {
@@ -62,7 +67,7 @@ body {
 }
 
 .button {
-  font-family: 'Roboto';
+  font-family: 'Roboto', sans-serif;
   font-size: 1rem;
 
   display: inline-block;
