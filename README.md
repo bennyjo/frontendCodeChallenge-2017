@@ -84,3 +84,19 @@ We expect to get your solution in a public git repository. You can use free host
 
 ## Notes
 To properly evaluate the solution in Edge the files must be served from a web server rather than directly from the file system. This is due to the fact that Edge does not support the Web Storage API when files are served from the file system.
+
+## TODOs (not in order of priority)
+- [ ] Make email and user fields required
+- [ ] Update existing colleage counts as colleages are added
+- [ ] Remove possibility to add of more than 10 existing colleages
+- [ ] Show error when a duplicate email is submitted
+- [ ] Add custom checkbox
+- [ ] Sticky footer
+- [ ] Adaptive layout (currently it is a bit responsive at best)
+- [ ] Fix script errors in Edge
+- [ ] Verify accessability
+- [ ] Extract code into components
+- [ ] Add test where missing
+- [ ] Possibly animate adding/removing rows
+- [ ] Animate the bin (for fun)
+- [ ] Code review using a second pair of eyes
