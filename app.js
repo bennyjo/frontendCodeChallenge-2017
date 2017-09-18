@@ -1,4 +1,4 @@
-/* global stepper, text, UserStore, UserForm */
+/* global stepper, text, UserStore, UserForm, UserList */
 /* exported app */
 
 const app = (function () {
@@ -9,7 +9,9 @@ const app = (function () {
   const currentColleageCounter = document.getElementById('current-colleague-counter');
 
   const newColleagues = new UserStore('newColleagues');
+  const existingColleagues = new UserStore('existingColleages');
   new UserForm(document.getElementById('newColleaguesForm'), newColleagues);
+  new UserList(document.getElementById('existingColleagesList'), existingColleagues);
 
   if (!newColleagues.users.length) {
     newColleagues.addAnonymous();
@@ -25,6 +27,7 @@ const app = (function () {
       newColleagues.addAnonymous();
     }
   });
+  // End psuedo button component
 
   // TODO: Extract into a 'pseudoButton' component
   const resetFormElement = document.getElementById('resetNewColleaguesForm');
@@ -40,6 +43,7 @@ const app = (function () {
       newColleagues.addAnonymous();
     }
   });
+  // End psuedo button component
 
   // TODO: Extract into a 'button' component
   const addExistingColleaguesButton = document.getElementById('addExistingColleaguesButton');
@@ -47,6 +51,13 @@ const app = (function () {
   newColleagues.onAdd(renderAddButtonText);
   newColleagues.onRemove(renderAddButtonText);
   newColleagues.onEmpty(renderAddButtonText);
+
+  addExistingColleaguesButton.addEventListener('click', () => {
+    newColleagues.users.forEach((user) => existingColleagues.add(user));
+
+    newColleagues.empty();
+    newColleagues.addAnonymous();
+  });
 
   function renderAddButtonText() {
     const newColleagesCount = newColleagues.users.length;
@@ -57,6 +68,7 @@ const app = (function () {
       addExistingColleaguesButton.innerHTML = `Add ${newColleagesCount} colleagues`;
     }
   }
+  // End button component
 
   function render() {
     stepper.render(stepperElement, [
