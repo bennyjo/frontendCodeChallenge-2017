@@ -21,7 +21,7 @@ class UserStore {
   add(user) {
     const userStore = this;
 
-    if (user.email && !hasUniqueEmail(user)) {
+    if (user.email && userStore._isDuplicateEmail(user.email)) {
       throw new Error('UserStore: user email "' + user.email + '" has already been added.');
     }
 
@@ -33,10 +33,6 @@ class UserStore {
     userStore.onAddCallbacks.forEach(onAddCallback => onAddCallback(user));
 
     return user.id;
-
-    function hasUniqueEmail(newUser) {
-      return userStore.users.every(storedUser => storedUser.email !== newUser.email);
-    }
 
     function generateId(user) {
       return user.email ? Date.now() + user.email : (Date.now() + Math.random()).toString();
@@ -77,6 +73,28 @@ class UserStore {
     }
   }
 
+  update(userId, userData) {
+    const userStore = this;
+
+    if (userData.email && userStore._isDuplicateEmail(userData.email)) {
+      throw new Error('UserStore: user email "' + userData.email + '" already exists.');
+    }
+
+    const userToUpdate = userStore.users.find(storedUser => storedUser.id === userId);
+
+    if (userToUpdate) {
+      if (userData.email) {
+        userToUpdate.email = userData.email;
+      }
+
+      if (userData.name) {
+        userToUpdate.name = userData.name;
+      }
+
+      userStore.webStore.setItem(userStore.id, JSON.stringify(userStore.users));
+    }
+  }
+
   empty() {
     const userStore = this;
 
@@ -101,5 +119,10 @@ class UserStore {
     if (typeof callback === 'function') {
       this.onEmptyCallbacks.push(callback);
     }
+  }
+
+  _isDuplicateEmail(email) {
+    const userStore = this;
+    return userStore.users.some(storedUser => storedUser.email === email);
   }
 }

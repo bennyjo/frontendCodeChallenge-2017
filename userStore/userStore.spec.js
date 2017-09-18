@@ -193,6 +193,35 @@ QUnit.module('UserStore', {
     });
   });
 
+  QUnit.module('.update()', () => {
+    test('it updates a user', assert => {
+      const storeId = 'myUserStore';
+      const userStore = new UserStore(storeId, localStorage);
+      const johnUserId = userStore.add({ name: 'John Doe', email: 'john.doe@idf.org' });
+      const newEmail = 'new.john.doe@idf.org';
+      const newUserName = 'New John Doe';
+
+      userStore.update(johnUserId, { name: newUserName, email: newEmail });
+
+      const usersInWebStore = JSON.parse(localStorage.getItem(storeId));
+      assert.deepEqual(userStore.users[0].name, newUserName, 'updates the username');
+      assert.deepEqual(userStore.users[0].email, newEmail, 'updates the email');
+      assert.deepEqual(usersInWebStore[0].name, newUserName, 'updates the username in the web store');
+      assert.deepEqual(usersInWebStore[0].email, newEmail, 'updates the email in the web store');
+    });
+
+    test('it does not update duplicate email addresses', assert => {
+      const storeId = 'myUserStore';
+      const userStore = new UserStore(storeId, localStorage);
+      const johnUserId = userStore.add({ name: 'John Doe', email: 'john.doe@idf.org' });
+      userStore.add({ name: 'Johanna Doe', email: 'johanna.doe@idf.org' });
+
+      assert.throws(() => {
+        userStore.update(johnUserId, { email: 'johanna.doe@idf.org' });
+      });
+    });
+  });
+
   QUnit.module('.empty()', () => {
     test('it empties the store', assert => {
       const storeId = 'myUserStore';
