@@ -193,50 +193,30 @@ QUnit.module('UserStore', {
     });
   });
 
-  QUnit.module('.set()', () => {
-    test('it empties the store given no users', assert => {
+  QUnit.module('.empty()', () => {
+    test('it empties the store', assert => {
       const storeId = 'myUserStore';
       const userStore = new UserStore(storeId, localStorage);
       userStore.add({ name: 'Ivana Doe', email: 'ivana.doe@idf.org'});
       userStore.add({ name: 'Irvine Doe', email: 'irvine.doe@idf.org'});
       userStore.add({ name: 'Maya Doe', email: 'maya.doe@idf.org'});
 
-      userStore.set();
+      userStore.empty();
 
       assert.strictEqual(userStore.users.length, 0, 'the users property');
       assert.strictEqual(localStorage.getItem(storeId), null, 'the web storage');
     });
 
-    test('it sets the store to given users', assert => {
-      const storeId = 'myUserStore';
-      const userStore = new UserStore(storeId, localStorage);
-      const lauraUser = { name: 'Laura Williams', email: 'laura.williams@idf.org' };
-      userStore.add({ name: 'Ivana Doe', email: 'ivana.doe@idf.org'});
-      userStore.add({ name: 'Irvine Doe', email: 'irvine.doe@idf.org'});
-      userStore.add({ name: 'Maya Doe', email: 'maya.doe@idf.org'});
-
-      userStore.set([ lauraUser ]);
-
-      const usersInWebStore = JSON.parse(localStorage.getItem(storeId));
-      assert.strictEqual(userStore.users[0], lauraUser, 'the users property');
-      assert.deepEqual(usersInWebStore[0], lauraUser, 'the web storage');
-    });
-
-    test('it triggers an set change', assert => {
+    test('it triggers an empty change', assert => {
       const userStore = new UserStore('myUserStore', localStorage);
-      const johnUser = { name: 'John Doe', email: 'john.doe@idf.org'};
-      const lauraUser = { name: 'Laura Williams', email: 'laura.williams@idf.org' };
-      let onSetCallCount = 0;
-      let onSetUsers;
-      userStore.onSet((users) => {
-        onSetCallCount++;
-        onSetUsers = users;
+      let onEmpty = 0;
+      userStore.onEmpty(() => {
+        onEmpty++;
       });
 
-      userStore.set([ johnUser, lauraUser ]);
+      userStore.empty();
 
-      assert.strictEqual(onSetCallCount, 1, 'onSet callback is called');
-      assert.deepEqual([ johnUser, lauraUser ], onSetUsers, 'onSet callback is called with the set users');
+      assert.strictEqual(onEmpty, 1, 'onSet callback is called');
     });
   });
 });

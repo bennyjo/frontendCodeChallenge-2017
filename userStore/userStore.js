@@ -15,7 +15,7 @@ class UserStore {
     this.users = users;
     this.onAddCallbacks = [];
     this.onRemoveCallbacks = [];
-    this.onSetCallbacks = [];
+    this.onEmptyCallbacks = [];
   }
 
   add(user) {
@@ -77,17 +77,12 @@ class UserStore {
     }
   }
 
-  set(users) {
+  empty() {
     const userStore = this;
 
     userStore.webStore.removeItem(userStore.id);
     userStore.users = [];
-
-    if (Array.isArray(users)) {
-      userStore.users = users;
-      userStore.webStore.setItem(userStore.id, JSON.stringify(users));
-      userStore.onSetCallbacks.forEach(onSetCallback => onSetCallback(users));
-    }
+    userStore.onEmptyCallbacks.forEach(onEmptyCallBack => onEmptyCallBack());
   }
 
   onAdd(callback) {
@@ -102,9 +97,9 @@ class UserStore {
     }
   }
 
-  onSet(callback) {
+  onEmpty(callback) {
     if (typeof callback === 'function') {
-      this.onSetCallbacks.push(callback);
+      this.onEmptyCallbacks.push(callback);
     }
   }
 }
