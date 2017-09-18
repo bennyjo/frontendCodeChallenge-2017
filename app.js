@@ -15,7 +15,7 @@ const app = (function () {
     newColleagues.addAnonymous();
   }
 
-  // TODO: User a 'pseudoButton' component
+  // TODO: Extract into a 'pseudoButton' component
   const addColleageElement = document.getElementById('addNewColleague');
   addColleageElement.addEventListener('click', () => newColleagues.addAnonymous());
   addColleageElement.addEventListener('onKeyUp', (event) => {
@@ -26,7 +26,7 @@ const app = (function () {
     }
   });
 
-  // TODO: Use a 'pseudoButton' component
+  // TODO: Extract into a 'pseudoButton' component
   const resetFormElement = document.getElementById('resetNewColleaguesForm');
   resetFormElement.addEventListener('click', () => {
     newColleagues.empty();
@@ -41,6 +41,23 @@ const app = (function () {
     }
   });
 
+  // TODO: Extract into a 'button' component
+  const addExistingColleaguesButton = document.getElementById('addExistingColleaguesButton');
+
+  newColleagues.onAdd(renderAddButtonText);
+  newColleagues.onRemove(renderAddButtonText);
+  newColleagues.onEmpty(renderAddButtonText);
+
+  function renderAddButtonText() {
+    const newColleagesCount = newColleagues.users.length;
+
+    if (newColleagesCount < 2) {
+      addExistingColleaguesButton.innerHTML = 'Add a colleague';
+    } else {
+      addExistingColleaguesButton.innerHTML = `Add ${newColleagesCount} colleagues`;
+    }
+  }
+
   function render() {
     stepper.render(stepperElement, [
       { text: 'Step 1', isActive: true },
@@ -50,6 +67,8 @@ const app = (function () {
 
     text.render(addColleagueCounter, 10);
     text.render(currentColleageCounter, 0);
+
+    renderAddButtonText();
   }
 
   return { render };
