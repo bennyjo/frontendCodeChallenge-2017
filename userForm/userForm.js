@@ -20,7 +20,7 @@ class UserForm {
 
       element.innerHTML = rows.join('').trim();
 
-      const formRows = [...element.getElementsByClassName('userForm__row')];
+      const formRows = Array.apply(null, element.getElementsByClassName('userForm__row'));
       formRows.forEach(initBin);
       formRows.forEach(initInputs);
     }
@@ -37,7 +37,7 @@ class UserForm {
     }
 
     function removeRow(rowId) {
-      const formRows = [...element.getElementsByClassName('userForm__row')];
+      const formRows = Array.apply(null, element.getElementsByClassName('userForm__row'));
       const rowToRemove = formRows.find(formRow => formRow.getAttribute('data-id') === rowId);
 
       if (rowToRemove) {

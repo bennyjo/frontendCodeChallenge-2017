@@ -28,7 +28,7 @@ QUnit.module('stepper', () => {
       ];
 
       stepper.render(element, steps);
-      const stepElements = [...element.getElementsByTagName('li')];
+      const stepElements = Array.apply(null, element.getElementsByTagName('li'));
       const stepElementNames = stepElements.map(stepElement => stepElement.textContent);
 
       assert.deepEqual(stepElementNames, ['Step 1', 'Step 2', 'Step 3']);

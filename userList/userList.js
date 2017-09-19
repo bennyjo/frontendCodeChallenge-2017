@@ -19,7 +19,7 @@ class UserList {
 
       element.innerHTML = rows.join('').trim();
 
-      const fromRows = [...element.getElementsByClassName('userList__row')];
+      const fromRows = Array.apply(null, element.getElementsByClassName('userList__row'));
       fromRows.forEach(initBin);
     }
 
@@ -34,7 +34,7 @@ class UserList {
     }
 
     function removeRow(rowId) {
-      const formRows = [...element.getElementsByClassName('userList__row')];
+      const formRows = element.getElementsByClassName('userList__row');
       const rowToRemove = formRows.find(formRow => formRow.getAttribute('data-id') === rowId);
 
       if (rowToRemove) {
