@@ -20,9 +20,9 @@ class UserForm {
 
       element.innerHTML = rows.join('').trim();
 
-      const fromRows = [...element.getElementsByClassName('userForm__row')];
-      fromRows.forEach(initBin);
-      fromRows.forEach(initInputs);
+      const formRows = [...element.getElementsByClassName('userForm__row')];
+      formRows.forEach(initBin);
+      formRows.forEach(initInputs);
     }
 
     function addRow(user) {
