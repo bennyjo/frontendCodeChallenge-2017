@@ -34,7 +34,7 @@ class UserList {
     }
 
     function removeRow(rowId) {
-      const formRows = element.getElementsByClassName('userList__row');
+      const formRows = Array.apply(null, element.getElementsByClassName('userList__row'));
       const rowToRemove = formRows.find(formRow => formRow.getAttribute('data-id') === rowId);
 
       if (rowToRemove) {
