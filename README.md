@@ -93,7 +93,7 @@ To properly evaluate the solution in Edge the files must be served from a web se
 - [ ] Add custom checkbox
 - [ ] Sticky footer
 - [ ] Adaptive layout (currently it is a bit responsive at best)
-- [ ] Fix script errors in Edge
+- [x] Fix script errors in Edge
 - [ ] Verify accessability
 - [ ] Extract code into components
 - [ ] Add test where missing
